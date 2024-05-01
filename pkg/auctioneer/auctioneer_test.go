@@ -67,12 +67,10 @@ func TestAuction(t *testing.T) {
 	})
 
 	testCases := []struct {
-		desc string
-
+		desc  string
 		input []*auctioneer.Bidder
-
-		want *auctioneer.Bidder
-		err  error
+		want  *auctioneer.Bidder
+		err   error
 	}{
 		{
 			desc:  "no contest - no participants",
@@ -187,10 +185,8 @@ func TestAuctionAlt(t *testing.T) {
 	})
 
 	testCases := []struct {
-		desc string
-
-		input []*auctioneer.Bidder
-
+		desc   string
+		input  []*auctioneer.Bidder
 		want   *auctioneer.Bidder
 		hasErr bool
 	}{

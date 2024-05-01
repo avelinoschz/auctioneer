@@ -12,25 +12,21 @@ func TestNewBidder(t *testing.T) {
 	wrongInitialBid := 999.00
 
 	testCases := []struct {
-		desc string
-
+		desc  string
 		input BidderParams
-
-		want *Bidder
-		err  error
+		want  *Bidder
+		err   error
 	}{
 		{
 			desc:  "empty name",
 			input: BidderParams{},
-
-			err: ErrBidderEmptyName,
+			err:   ErrBidderEmptyName,
 		},
 		{
 			desc: "no initial bid",
 			input: BidderParams{
 				Name: bidderName,
 			},
-
 			err: ErrNoInitialBid,
 		},
 		{
@@ -39,7 +35,6 @@ func TestNewBidder(t *testing.T) {
 				Name:       bidderName,
 				InitialBid: initialBid,
 			},
-
 			err: ErrNoMaxBid,
 		},
 		{
@@ -49,7 +44,6 @@ func TestNewBidder(t *testing.T) {
 				InitialBid: initialBid,
 				MaxBid:     maxBid,
 			},
-
 			err: ErrNoIncrement,
 		},
 		{
@@ -60,7 +54,6 @@ func TestNewBidder(t *testing.T) {
 				MaxBid:     maxBid,
 				Increment:  increment,
 			},
-
 			err: ErrInvalidInitialBid,
 		},
 		{
@@ -71,7 +64,6 @@ func TestNewBidder(t *testing.T) {
 				MaxBid:     maxBid,
 				Increment:  increment,
 			},
-
 			want: &Bidder{
 				name:       bidderName,
 				initialBid: initialBid,

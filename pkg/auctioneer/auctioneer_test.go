@@ -75,15 +75,13 @@ func TestAuction(t *testing.T) {
 		{
 			desc:  "no contest - no participants",
 			input: []*auctioneer.Bidder{},
-
-			err: auctioneer.ErrNoContest,
+			err:   auctioneer.ErrNoContest,
 		},
 		{
 			desc: "no contest - one participant",
 			input: []*auctioneer.Bidder{
 				sasha,
 			},
-
 			err: auctioneer.ErrNoContest,
 		},
 		{
@@ -116,7 +114,6 @@ func TestAuction(t *testing.T) {
 			if err != nil && tc.err.Error() != err.Error() {
 				t.Fatalf("error doesn't match. got: %v, want: %v", err, tc.err)
 			}
-
 			if tc.want != got {
 				t.Fatalf("wrong winner. got: %+v, want: %+v", got, tc.want)
 			}
@@ -220,7 +217,6 @@ func TestAuctionAlt(t *testing.T) {
 			if (err != nil) != tc.hasErr {
 				t.Fatalf("error doesn't match. got: %v, want: %v", err, tc)
 			}
-
 			if tc.want != got {
 				t.Fatalf("wrong winner. got: %+v, want: %+v", got, tc.want)
 			}

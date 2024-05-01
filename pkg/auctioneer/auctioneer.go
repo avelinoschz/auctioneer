@@ -12,14 +12,21 @@ var (
 // Auctioneer manages the auction.
 type Auctioneer struct {
 	maxRounds int
-	// ... more fields like max bidders, etc
+	// ... more fields like max bidders, etc.
 }
+
+// default number of max rounds to avoid
+// never ending or high number of iterations
+const defaultMaxRounds = 30
 
 func defaultAuctioneer() *Auctioneer {
 	return &Auctioneer{
 		maxRounds: defaultMaxRounds,
 	}
 }
+
+// Option is a functional option for configuring the Auctioneer
+type Option func(*Auctioneer)
 
 // NewAuctioner allocates and returns a new [Auctioneer].
 func NewAuctioneer(opts ...Option) *Auctioneer {
@@ -30,21 +37,14 @@ func NewAuctioneer(opts ...Option) *Auctioneer {
 	return auctioneer
 }
 
-// default number of max rounds to avoid
-// never ending or high iterations numbers
-const defaultMaxRounds = 30
-
-// Option is a functional option for configuring the Auctioneer
-type Option func(*Auctioneer)
-
-// WithMaxRounds sets the auctioneer max rounds for the auction
+// WithMaxRounds sets the auctioneer max rounds for the auction.
 func WithMaxRounds(rounds int) Option {
 	return func(a *Auctioneer) {
 		a.maxRounds = rounds
 	}
 }
 
-// Auction mimics an auction based on multiple rounds
+// Auction mimics an auction based on multiple rounds.
 func (a *Auctioneer) Auction(bidders []*Bidder) (*Bidder, error) {
 	if len(bidders) < 2 {
 		return nil, ErrNoContest

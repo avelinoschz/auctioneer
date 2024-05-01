@@ -19,8 +19,8 @@ run-go: build-go
 run-test:
 	go test $(CURDIR)/pkg/auctioneer $(GO_TEST_FLAGS)
 
-.PHONY: cover
-cover:
+.PHONY: open-cover
+open-cover: run-test
 	go tool cover -html=$(GO_CODE_COVERAGE_OUTPUT)
 
 .PHONY: ensure-docker

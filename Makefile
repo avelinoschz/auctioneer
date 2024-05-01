@@ -36,4 +36,4 @@ build-docker: ensure-docker
 
 .PHONY: run-docker
 run-docker: ensure-docker
-	docker run --rm $(DOCKER_IMAGE_TAG) 
+	docker run --rm $(DOCKER_IMAGE_TAG)

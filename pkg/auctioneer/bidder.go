@@ -58,7 +58,7 @@ func NewBidder(params BidderParams) (*Bidder, error) {
 }
 
 // IncrementBid increases the latestBid based on the configured increment amount.
-func (b *Bidder) IncrementBid() error {
+func (b *Bidder) incrementBid() error {
 	newBid := b.latestBid + b.increment
 	if newBid > b.maxBid {
 		return ErrThresholdReached

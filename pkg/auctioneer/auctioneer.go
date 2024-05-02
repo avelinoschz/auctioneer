@@ -64,7 +64,7 @@ func (a *Auctioneer) Auction(bidders []*Bidder) (*Bidder, error) {
 			}
 
 			if b.latestBid < winningBid {
-				err := b.IncrementBid()
+				err := b.incrementBid()
 				if err != nil {
 					b.outOfAuction = true
 					remainingPlayers--

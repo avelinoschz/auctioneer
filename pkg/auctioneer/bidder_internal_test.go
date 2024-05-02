@@ -71,12 +71,52 @@ func TestNewBidder(t *testing.T) {
 				increment:  increment,
 				latestBid:  initialBid,
 			},
+			err: nil,
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.desc, func(t *testing.T) {
 			_, err := NewBidder(tc.input)
+			if err != nil && tc.err.Error() != err.Error() {
+				t.Fatalf("error doesn't match. got: %v, want: %v", err, tc.err)
+			}
+		})
+	}
+}
+
+func TestIncrementBid(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		desc  string
+		input *Bidder
+		err   error
+	}{
+		{
+			desc: "base case",
+			input: &Bidder{
+				latestBid: 1000,
+				maxBid:    1500,
+				increment: 200,
+			},
+			err: nil,
+		},
+		{
+			desc: "threshold reached",
+			input: &Bidder{
+				latestBid: 1000,
+				maxBid:    1500,
+				increment: 550,
+			},
+			err: ErrThresholdReached,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.desc, func(t *testing.T) {
+			bidder := tc.input
+			err := bidder.incrementBid()
 			if err != nil && tc.err.Error() != err.Error() {
 				t.Fatalf("error doesn't match. got: %v, want: %v", err, tc.err)
 			}

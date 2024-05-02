@@ -14,7 +14,6 @@ func TestNewBidder(t *testing.T) {
 	testCases := []struct {
 		desc  string
 		input BidderParams
-		want  *Bidder
 		err   error
 	}{
 		{
@@ -64,13 +63,6 @@ func TestNewBidder(t *testing.T) {
 				MaxBid:     maxBid,
 				Increment:  increment,
 			},
-			want: &Bidder{
-				name:       bidderName,
-				initialBid: initialBid,
-				maxBid:     maxBid,
-				increment:  increment,
-				latestBid:  initialBid,
-			},
 			err: nil,
 		},
 	}
@@ -91,6 +83,7 @@ func TestIncrementBid(t *testing.T) {
 	testCases := []struct {
 		desc  string
 		input *Bidder
+		want  float64
 		err   error
 	}{
 		{
@@ -100,7 +93,8 @@ func TestIncrementBid(t *testing.T) {
 				maxBid:    1500,
 				increment: 200,
 			},
-			err: nil,
+			want: 1200,
+			err:  nil,
 		},
 		{
 			desc: "threshold reached",
@@ -119,6 +113,13 @@ func TestIncrementBid(t *testing.T) {
 			err := bidder.incrementBid()
 			if err != nil && tc.err.Error() != err.Error() {
 				t.Fatalf("error doesn't match. got: %v, want: %v", err, tc.err)
+			}
+			if tc.err != nil {
+				return
+			}
+
+			if tc.want != bidder.latestBid {
+				t.Fatalf("wrong latest bid. got: %+v, want: %+v", bidder.latestBid, tc.want)
 			}
 		})
 	}

@@ -70,7 +70,7 @@ func TestNewBidder(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.desc, func(t *testing.T) {
 			_, err := NewBidder(tc.input)
-			if err != nil && tc.err.Error() != err.Error() {
+			if err != nil && err != tc.err {
 				t.Fatalf("error doesn't match. got: %v, want: %v", err, tc.err)
 			}
 		})
@@ -111,13 +111,12 @@ func TestIncrementBid(t *testing.T) {
 		t.Run(tc.desc, func(t *testing.T) {
 			bidder := tc.input
 			err := bidder.incrementBid()
-			if err != nil && tc.err.Error() != err.Error() {
+			if err != nil && err != tc.err {
 				t.Fatalf("error doesn't match. got: %v, want: %v", err, tc.err)
 			}
 			if tc.err != nil {
 				return
 			}
-
 			if tc.want != bidder.latestBid {
 				t.Fatalf("wrong latest bid. got: %+v, want: %+v", bidder.latestBid, tc.want)
 			}

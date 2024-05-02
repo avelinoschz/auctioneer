@@ -111,7 +111,7 @@ func TestAuction(t *testing.T) {
 		t.Run(tc.desc, func(t *testing.T) {
 			auctioneer := auctioneer.NewAuctioneer(auctioneer.WithMaxRounds(99))
 			got, err := auctioneer.Auction(tc.input)
-			if err != nil && tc.err.Error() != err.Error() {
+			if err != nil && err != tc.err {
 				t.Fatalf("error doesn't match. got: %v, want: %v", err, tc.err)
 			}
 			if tc.want != got {
@@ -182,10 +182,10 @@ func TestAuctionAlt(t *testing.T) {
 	})
 
 	testCases := []struct {
-		desc   string
-		input  []*auctioneer.Bidder
-		want   *auctioneer.Bidder
-		hasErr bool
+		desc  string
+		input []*auctioneer.Bidder
+		want  *auctioneer.Bidder
+		err   error
 	}{
 		{
 			desc: "alt auction 1",
@@ -214,7 +214,7 @@ func TestAuctionAlt(t *testing.T) {
 		t.Run(tc.desc, func(t *testing.T) {
 			auctioneer := auctioneer.NewAuctioneer()
 			got, err := auctioneer.AuctionAlt(tc.input)
-			if (err != nil) != tc.hasErr {
+			if err != nil && err != tc.err {
 				t.Fatalf("error doesn't match. got: %v, want: %v", err, tc)
 			}
 			if tc.want != got {

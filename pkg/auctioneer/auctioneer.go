@@ -9,10 +9,17 @@ var (
 	ErrNoContest = errors.New("not enough participants. need at least 2")
 )
 
+// TODO the Auctioneer itself could be extended to an interface
+// We could have differente type of implementations for the auction
+// Let's say Online Auction and Physical Auction.
+// type Auctioneer interface{
+// 	Auction()
+// }
+
 // Auctioneer manages the auction.
 type Auctioneer struct {
 	maxRounds int
-	// ... more fields like max bidders, etc.
+	// ... more fields like max participants, max amount of bid, min amount of bid, etc.
 }
 
 // default number of max rounds to avoid

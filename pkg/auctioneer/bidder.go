@@ -23,6 +23,8 @@ type Bidder struct {
 }
 
 // BidderParams holds information required to build a Bidder.
+// TODO add more business logic ruleset and validations
+// Like not accepting negatives, a hard limit for max bid, etc
 type BidderParams struct {
 	Name       string
 	InitialBid float64
